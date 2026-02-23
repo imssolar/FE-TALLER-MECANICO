@@ -49,10 +49,11 @@ export default function Buses() {
   const [editingBus, setEditingBus] = useState<Bus | null>(null);
   const [search, setSearch] = useState("");
 
-  const { data: buses = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["buses"],
     queryFn: busService.getAll,
   });
+  const buses = Array.isArray(data) ? data : [];
 
   const createMutation = useMutation({
     mutationFn: (data: CreateBusDto) => busService.create(data),
@@ -175,7 +176,7 @@ export default function Buses() {
         />
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
