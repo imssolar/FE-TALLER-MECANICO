@@ -18,7 +18,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogOut, User } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
 import { useAuth } from "@/hooks/use-auth";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 
 const routeNames: Record<string, string> = {
   "/": "Dashboard",
@@ -47,7 +47,9 @@ export function Header() {
       <Breadcrumb className="flex-1">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Inicio</BreadcrumbLink>
+            <BreadcrumbLink asChild>
+              <Link to="/">Inicio</Link>
+            </BreadcrumbLink>
           </BreadcrumbItem>
           {isCatalogo && (
             <>
