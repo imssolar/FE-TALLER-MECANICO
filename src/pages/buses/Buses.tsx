@@ -213,7 +213,7 @@ export default function Buses() {
                   <TableCell>{bus.motorB}</TableCell>
                   <TableCell>{bus.anioFabB}</TableCell>
                   <TableCell>{bus.kmB?.toLocaleString()}</TableCell>
-                  <TableCell>{bus.terminal?.nombreT}</TableCell>
+                  <TableCell>{bus.terminal?.terminal}</TableCell>
                   <TableCell>
                     {bus.operativaB ? (
                       <Badge className="bg-green-100 text-green-800 hover:bg-green-100">

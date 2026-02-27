@@ -1,6 +1,7 @@
 export interface Terminal {
   idTerminal: number;
-  nombreT: string;
+  terminal: string;
+  prefijo : string;
 }
 
 export interface Modelo {
