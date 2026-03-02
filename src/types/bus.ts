@@ -1,12 +1,11 @@
+import type { Modelo } from "./modelo";
+
+export type { Modelo };
+
 export interface Terminal {
   idTerminal: number;
   terminal: string;
   prefijo : string;
-}
-
-export interface Modelo {
-  idModelo: number;
-  nombreM: string;
 }
 
 export interface Bus {
