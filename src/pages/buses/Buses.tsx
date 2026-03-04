@@ -1,8 +1,3 @@
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { busService } from "@/services/bus.service";
-import type { Bus, CreateBusDto, UpdateBusDto } from "@/types/bus";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { ConfirmDialog } from "@/components/shared/ConfirmDialog";
 import { Button } from "@/components/ui/button";
@@ -25,134 +20,29 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-import { toast } from "sonner";
-
-interface BusFormValues {
-  idBus: number;
-  idTerminal: number;
-  idModelo: number;
-  patenteB: string;
-  marcaB: string;
-  motorB: string;
-  anioFabB: number | undefined;
-  transmisionB: string;
-  kmB: number | undefined;
-  zonaB: string;
-  nroNeumaticosB: number | undefined;
-  nroBaterias: number | undefined;
-}
+import { useBuses } from "@/hooks/bus/useBuses";
 
 export default function Buses() {
-  const queryClient = useQueryClient();
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [editingBus, setEditingBus] = useState<Bus | null>(null);
-  const [search, setSearch] = useState("");
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["buses"],
-    queryFn: busService.getAll,
-  });
-  const buses = Array.isArray(data) ? data : [];
-
-  const createMutation = useMutation({
-    mutationFn: (data: CreateBusDto) => busService.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["buses"] });
-      toast.success("Bus creado correctamente");
-      closeDialog();
-    },
-    onError: () => toast.error("Error al crear el bus"),
-  });
-
-  const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: UpdateBusDto }) =>
-      busService.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["buses"] });
-      toast.success("Bus actualizado correctamente");
-      closeDialog();
-    },
-    onError: () => toast.error("Error al actualizar el bus"),
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: (id: number) => busService.delete(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["buses"] });
-      toast.success("Bus eliminado correctamente");
-    },
-    onError: () => toast.error("Error al eliminar el bus"),
-  });
-
   const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<BusFormValues>();
+    filteredBuses,
+    isLoading,
+    search,
+    setSearch,
+    dialogOpen,
+    setDialogOpen,
+    editingBus,
+    deleteId,
+    setDeleteId,
+    isSaving,
+    form,
+    openCreate,
+    openEdit,
+    closeDialog,
+    onSubmit,
+    confirmDelete,
+  } = useBuses();
 
-  const openCreate = () => {
-    setEditingBus(null);
-    reset({
-      idBus: undefined as unknown as number,
-      idTerminal: undefined as unknown as number,
-      idModelo: undefined as unknown as number,
-      patenteB: "",
-      marcaB: "",
-      motorB: "",
-      anioFabB: undefined,
-      transmisionB: "",
-      kmB: 0,
-      zonaB: "",
-      nroNeumaticosB: 0,
-      nroBaterias: 0,
-    });
-    setDialogOpen(true);
-  };
-
-  const openEdit = (bus: Bus) => {
-    setEditingBus(bus);
-    reset({
-      idBus: bus.idBus,
-      idTerminal: bus.terminal?.idTerminal,
-      idModelo: bus.modelo?.idModelo,
-      patenteB: bus.patenteB ?? "",
-      marcaB: bus.marcaB ?? "",
-      motorB: bus.motorB ?? "",
-      anioFabB: bus.anioFabB,
-      transmisionB: bus.transmisionB ?? "",
-      kmB: bus.kmB ?? 0,
-      zonaB: bus.zonaB ?? "",
-      nroNeumaticosB: bus.nroNeumaticosB ?? 0,
-      nroBaterias: bus.nroBaterias ?? 0,
-    });
-    setDialogOpen(true);
-  };
-
-  const closeDialog = () => {
-    setDialogOpen(false);
-    setEditingBus(null);
-    reset();
-  };
-
-  const onSubmit = (data: BusFormValues) => {
-    if (editingBus) {
-      const { idBus: _id, ...updateData } = data;
-      updateMutation.mutate({ id: editingBus.idBus, data: updateData });
-    } else {
-      createMutation.mutate(data as CreateBusDto);
-    }
-  };
-
-  const filteredBuses = buses.filter(
-    (bus) =>
-      bus.patenteB?.toLowerCase().includes(search.toLowerCase()) ||
-      bus.marcaB?.toLowerCase().includes(search.toLowerCase()) ||
-      String(bus.idBus).includes(search)
-  );
-
-  const isSaving = createMutation.isPending || updateMutation.isPending;
+  const { register, handleSubmit, formState: { errors } } = form;
 
   return (
     <>
@@ -252,7 +142,6 @@ export default function Buses() {
         </Table>
       </div>
 
-      {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -348,19 +237,13 @@ export default function Buses() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation */}
       <ConfirmDialog
         open={deleteId !== null}
         onOpenChange={(open) => !open && setDeleteId(null)}
         title="Eliminar Bus"
         description="¿Estás seguro de que deseas eliminar este bus? Esta acción no se puede deshacer."
         confirmLabel="Eliminar"
-        onConfirm={() => {
-          if (deleteId !== null) {
-            deleteMutation.mutate(deleteId);
-            setDeleteId(null);
-          }
-        }}
+        onConfirm={confirmDelete}
       />
     </>
   );
