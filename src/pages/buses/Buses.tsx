@@ -1,8 +1,16 @@
+import { Controller } from "react-hook-form";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { ConfirmDialog } from "@/components/shared/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -40,9 +48,11 @@ export default function Buses() {
     closeDialog,
     onSubmit,
     confirmDelete,
+    terminales,
+    modelos,
   } = useBuses();
 
-  const { register, handleSubmit, formState: { errors } } = form;
+  const { register, handleSubmit, control, formState: { errors } } = form;
 
   return (
     <>
@@ -195,22 +205,56 @@ export default function Buses() {
                 <Input id="zonaB" {...register("zonaB")} maxLength={2} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="idTerminal">ID Terminal *</Label>
-                <Input
-                  id="idTerminal"
-                  type="number"
-                  {...register("idTerminal", { required: "Terminal requerido", valueAsNumber: true })}
+                <Label>Terminal *</Label>
+                <Controller
+                  control={control}
+                  name="idTerminal"
+                  rules={{ required: "Terminal requerido" }}
+                  render={({ field }) => (
+                    <Select
+                      value={field.value ? String(field.value) : ""}
+                      onValueChange={(val) => field.onChange(Number(val))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Seleccionar terminal" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {terminales.map((t) => (
+                          <SelectItem key={t.idTerminal} value={String(t.idTerminal)}>
+                            {t.terminal}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                 />
                 {errors.idTerminal && (
                   <p className="text-sm text-destructive">{errors.idTerminal.message}</p>
                 )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="idModelo">ID Modelo *</Label>
-                <Input
-                  id="idModelo"
-                  type="number"
-                  {...register("idModelo", { required: "Modelo requerido", valueAsNumber: true })}
+                <Label>Modelo *</Label>
+                <Controller
+                  control={control}
+                  name="idModelo"
+                  rules={{ required: "Modelo requerido" }}
+                  render={({ field }) => (
+                    <Select
+                      value={field.value ? String(field.value) : ""}
+                      onValueChange={(val) => field.onChange(Number(val))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Seleccionar modelo" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {modelos.map((m) => (
+                          <SelectItem key={m.id} value={String(m.id)}>
+                            {m.modelo}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                 />
                 {errors.idModelo && (
                   <p className="text-sm text-destructive">{errors.idModelo.message}</p>
