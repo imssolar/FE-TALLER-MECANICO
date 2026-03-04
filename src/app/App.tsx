@@ -8,6 +8,7 @@ import Buses from "@/pages/buses/Buses";
 import Empleados from "@/pages/empleados/Empleados";
 import OrdenesTrabajo from "@/pages/ordenes-trabajo/OrdenesTrabajo";
 import Modelos from "@/pages/modelos/Modelos";
+import Terminales from "@/pages/terminales/Terminales";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/empleados" element={<Empleados />} />
             <Route path="/ordenes-trabajo" element={<OrdenesTrabajo />} />
             <Route path="/catalogos/modelos" element={<Modelos />} />
+            <Route path="/catalogos/terminales" element={<Terminales />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/auth/sign-in" />} />
