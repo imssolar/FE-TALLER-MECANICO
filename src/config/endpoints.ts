@@ -21,8 +21,8 @@ export const API_ENDPOINTS = {
     byId: (id: number) => `${BASE_URL}/ordenes-trabajo/${id}`,
   },
   terminales: {
-    base: `${BASE_URL}/terminales`,
-    byId: (id: number) => `${BASE_URL}/terminales/${id}`,
+    base: `${BASE_URL}/terminal`,
+    byId: (id: number) => `${BASE_URL}/terminal/${id}`,
   },
   modelos: {
     base: `${BASE_URL}/modelos`,
