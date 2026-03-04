@@ -28,4 +28,8 @@ export const API_ENDPOINTS = {
     base: `${BASE_URL}/modelos`,
     byId: (id: number) => `${BASE_URL}/modelos/${id}`,
   },
+  rutas: {
+    base: `${BASE_URL}/rutas`,
+    byId: (id: number) => `${BASE_URL}/rutas/${id}`,
+  },
 } as const;
