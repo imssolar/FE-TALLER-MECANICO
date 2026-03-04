@@ -2,8 +2,11 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { busService } from "@/services/bus.service";
+import { terminalService } from "@/services/terminal.service";
+import { modeloService } from "@/services/modelo.service";
 import type { Bus, CreateBusDto } from "@/types/bus";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export interface BusFormValues {
   idBus: number;
@@ -33,6 +36,18 @@ export function useBuses() {
   });
   const buses = Array.isArray(data) ? data : [];
 
+  const { data: terminalesData } = useQuery({
+    queryKey: ["terminales"],
+    queryFn: terminalService.getAll,
+  });
+  const terminales = Array.isArray(terminalesData) ? terminalesData : [];
+
+  const { data: modelosData } = useQuery({
+    queryKey: ["modelos"],
+    queryFn: modeloService.getAll,
+  });
+  const modelos = Array.isArray(modelosData) ? modelosData : [];
+
   const form = useForm<BusFormValues>();
 
   const closeDialog = () => {
@@ -48,7 +63,7 @@ export function useBuses() {
       toast.success("Bus creado correctamente");
       closeDialog();
     },
-    onError: () => toast.error("Error al crear el bus"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al crear el bus")),
   });
 
   const updateMutation = useMutation({
@@ -59,7 +74,7 @@ export function useBuses() {
       toast.success("Bus actualizado correctamente");
       closeDialog();
     },
-    onError: () => toast.error("Error al actualizar el bus"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al actualizar el bus")),
   });
 
   const deleteMutation = useMutation({
@@ -68,7 +83,7 @@ export function useBuses() {
       queryClient.invalidateQueries({ queryKey: ["buses"] });
       toast.success("Bus eliminado correctamente");
     },
-    onError: () => toast.error("Error al eliminar el bus"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al eliminar el bus")),
   });
 
   const openCreate = () => {
@@ -151,5 +166,7 @@ export function useBuses() {
     closeDialog,
     onSubmit,
     confirmDelete,
+    terminales,
+    modelos,
   };
 }

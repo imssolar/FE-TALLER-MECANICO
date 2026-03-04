@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { modeloService } from "@/services/modelo.service";
 import type { Modelo } from "@/types/modelo";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export interface ModeloFormValues {
   modelo: string;
@@ -39,7 +40,7 @@ export function useModelos() {
       toast.success("Modelo creado correctamente");
       closeDialog();
     },
-    onError: () => toast.error("Error al crear el modelo"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al crear el modelo")),
   });
 
   const updateMutation = useMutation({
@@ -50,7 +51,7 @@ export function useModelos() {
       toast.success("Modelo actualizado correctamente");
       closeDialog();
     },
-    onError: () => toast.error("Error al actualizar el modelo"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al actualizar el modelo")),
   });
 
   const deleteMutation = useMutation({
@@ -59,7 +60,7 @@ export function useModelos() {
       queryClient.invalidateQueries({ queryKey: ["modelos"] });
       toast.success("Modelo eliminado correctamente");
     },
-    onError: () => toast.error("Error al eliminar el modelo"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al eliminar el modelo")),
   });
 
   const openCreate = () => {
