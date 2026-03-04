@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { rutaService } from "@/services/ruta.service";
 import type { Ruta } from "@/types/ruta";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export interface RutaFormValues {
   ruta: string;
@@ -37,7 +38,7 @@ export function useRutas() {
       toast.success("Ruta creada correctamente");
       closeDialog();
     },
-    onError: () => toast.error("Error al crear la ruta"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al crear la ruta")),
   });
 
   const updateMutation = useMutation({
@@ -48,7 +49,7 @@ export function useRutas() {
       toast.success("Ruta actualizada correctamente");
       closeDialog();
     },
-    onError: () => toast.error("Error al actualizar la ruta"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al actualizar la ruta")),
   });
 
   const deleteMutation = useMutation({
@@ -57,7 +58,7 @@ export function useRutas() {
       queryClient.invalidateQueries({ queryKey: ["rutas"] });
       toast.success("Ruta eliminada correctamente");
     },
-    onError: () => toast.error("Error al eliminar la ruta"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al eliminar la ruta")),
   });
 
   const openCreate = () => {
