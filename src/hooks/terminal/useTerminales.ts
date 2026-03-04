@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { terminalService } from "@/services/terminal.service";
 import type { Terminal } from "@/types/terminal";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export interface TerminalFormValues {
   terminal: string;
@@ -38,7 +39,7 @@ export function useTerminales() {
       toast.success("Terminal creado correctamente");
       closeDialog();
     },
-    onError: () => toast.error("Error al crear el terminal"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al crear el terminal")),
   });
 
   const updateMutation = useMutation({
@@ -49,7 +50,7 @@ export function useTerminales() {
       toast.success("Terminal actualizado correctamente");
       closeDialog();
     },
-    onError: () => toast.error("Error al actualizar el terminal"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al actualizar el terminal")),
   });
 
   const deleteMutation = useMutation({
@@ -58,7 +59,7 @@ export function useTerminales() {
       queryClient.invalidateQueries({ queryKey: ["terminales"] });
       toast.success("Terminal eliminado correctamente");
     },
-    onError: () => toast.error("Error al eliminar el terminal"),
+    onError: (error) => toast.error(getErrorMessage(error, "Error al eliminar el terminal")),
   });
 
   const openCreate = () => {
