@@ -4,9 +4,11 @@ import { useForm, type UseFormReturn } from "react-hook-form";
 import { ordenTrabajoService } from "@/services/orden-trabajo.service";
 import { terminalService } from "@/services/terminal.service";
 import { busService } from "@/services/bus.service";
+import { empleadoService } from "@/services/empleado.service";
 import type { OrdenTrabajo, TipoOt, CreateOrdenTrabajoDto } from "@/types/orden-trabajo";
 import type { Terminal } from "@/types/terminal";
 import type { Bus } from "@/types/bus";
+import type { Empleado } from "@/types/empleado";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/utils/get-error-message";
 
@@ -18,17 +20,17 @@ export interface OrdenTrabajoFormValues {
   idBus: number | undefined;
   km: number | undefined;
   ppu: string;
-  conductor: string;
+  idConductor: number | undefined;
   fechaHoraIngreso: string;
   fechaHoraSalida: string;
   trabajoARealizar: string;
   obsTrabMecanico: string;
   obsTrabElectrico: string;
-  jefeTurnoPatio: string;
+  idJefeTurnoPatio: number | undefined;
   horaJefeTurnoPatio: string;
-  jefeTurnoMant: string;
+  idJefeTurnoMant: number | undefined;
   horaJefeTurnoMant: string;
-  supervCalidad: string;
+  idSupervCalidad: number | undefined;
   horaSupervCalidad: string;
   obsControlCalidad: string;
   repAutoriza: string;
@@ -45,17 +47,17 @@ const defaultValues: OrdenTrabajoFormValues = {
   idBus: undefined,
   km: undefined,
   ppu: "",
-  conductor: "",
+  idConductor: undefined,
   fechaHoraIngreso: "",
   fechaHoraSalida: "",
   trabajoARealizar: "",
   obsTrabMecanico: "",
   obsTrabElectrico: "",
-  jefeTurnoPatio: "",
+  idJefeTurnoPatio: undefined,
   horaJefeTurnoPatio: "",
-  jefeTurnoMant: "",
+  idJefeTurnoMant: undefined,
   horaJefeTurnoMant: "",
-  supervCalidad: "",
+  idSupervCalidad: undefined,
   horaSupervCalidad: "",
   obsControlCalidad: "",
   repAutoriza: "",
@@ -83,6 +85,7 @@ interface UseOrdenesTrabajoReturn {
   confirmDelete: () => void;
   terminales: Terminal[];
   buses: Bus[];
+  empleados: Empleado[];
 }
 
 export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
@@ -109,6 +112,12 @@ export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
     queryFn: busService.getAll,
   });
   const buses = Array.isArray(busesData) ? busesData : [];
+
+  const { data: empleadosData } = useQuery({
+    queryKey: ["empleados"],
+    queryFn: empleadoService.getAll,
+  });
+  const empleados = Array.isArray(empleadosData) ? empleadosData : [];
 
   const form = useForm<OrdenTrabajoFormValues>();
 
@@ -164,17 +173,17 @@ export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
       idBus: ot.bus?.idBus ?? undefined,
       km: ot.km ?? undefined,
       ppu: ot.ppu ?? "",
-      conductor: ot.conductor ?? "",
+      idConductor: ot.conductor?.id ?? undefined,
       fechaHoraIngreso: ot.fechaHoraIngreso ?? "",
       fechaHoraSalida: ot.fechaHoraSalida ?? "",
       trabajoARealizar: ot.trabajoARealizar ?? "",
       obsTrabMecanico: ot.obsTrabMecanico ?? "",
       obsTrabElectrico: ot.obsTrabElectrico ?? "",
-      jefeTurnoPatio: ot.jefeTurnoPatio ?? "",
+      idJefeTurnoPatio: ot.jefeTurnoPatio?.id ?? undefined,
       horaJefeTurnoPatio: ot.horaJefeTurnoPatio ?? "",
-      jefeTurnoMant: ot.jefeTurnoMant ?? "",
+      idJefeTurnoMant: ot.jefeTurnoMant?.id ?? undefined,
       horaJefeTurnoMant: ot.horaJefeTurnoMant ?? "",
-      supervCalidad: ot.supervCalidad ?? "",
+      idSupervCalidad: ot.supervCalidad?.id ?? undefined,
       horaSupervCalidad: ot.horaSupervCalidad ?? "",
       obsControlCalidad: ot.obsControlCalidad ?? "",
       repAutoriza: ot.repAutoriza ?? "",
@@ -205,7 +214,7 @@ export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
       String(ot.id).includes(search) ||
       ot.tipoOt?.toLowerCase().includes(search.toLowerCase()) ||
       ot.ppu?.toLowerCase().includes(search.toLowerCase()) ||
-      ot.conductor?.toLowerCase().includes(search.toLowerCase()) ||
+      ot.conductor?.nombreCompleto?.toLowerCase().includes(search.toLowerCase()) ||
       ot.terminal?.terminal?.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -230,12 +239,12 @@ export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
     confirmDelete,
     terminales,
     buses,
+    empleados,
   };
 }
 
 function cleanFormData(data: OrdenTrabajoFormValues): CreateOrdenTrabajoDto {
   return {
-    ...data,
     id: data.id!,
     idTerminal: data.idTerminal ?? undefined,
     tipoOt: data.tipoOt || undefined,
@@ -243,17 +252,17 @@ function cleanFormData(data: OrdenTrabajoFormValues): CreateOrdenTrabajoDto {
     idBus: data.idBus ?? undefined,
     km: data.km ?? undefined,
     ppu: data.ppu || undefined,
-    conductor: data.conductor || undefined,
+    idConductor: data.idConductor ?? undefined,
     fechaHoraIngreso: data.fechaHoraIngreso || undefined,
     fechaHoraSalida: data.fechaHoraSalida || undefined,
     trabajoARealizar: data.trabajoARealizar || undefined,
     obsTrabMecanico: data.obsTrabMecanico || undefined,
     obsTrabElectrico: data.obsTrabElectrico || undefined,
-    jefeTurnoPatio: data.jefeTurnoPatio || undefined,
+    idJefeTurnoPatio: data.idJefeTurnoPatio ?? undefined,
     horaJefeTurnoPatio: data.horaJefeTurnoPatio || undefined,
-    jefeTurnoMant: data.jefeTurnoMant || undefined,
+    idJefeTurnoMant: data.idJefeTurnoMant ?? undefined,
     horaJefeTurnoMant: data.horaJefeTurnoMant || undefined,
-    supervCalidad: data.supervCalidad || undefined,
+    idSupervCalidad: data.idSupervCalidad ?? undefined,
     horaSupervCalidad: data.horaSupervCalidad || undefined,
     obsControlCalidad: data.obsControlCalidad || undefined,
     repAutoriza: data.repAutoriza || undefined,
