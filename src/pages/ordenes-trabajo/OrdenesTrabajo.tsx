@@ -51,6 +51,7 @@ export default function OrdenesTrabajo() {
     confirmDelete,
     terminales,
     buses,
+    empleados,
   } = useOrdenesTrabajo();
 
   const { register, handleSubmit, control, formState: { errors } } = form;
@@ -115,7 +116,7 @@ export default function OrdenesTrabajo() {
                   <TableCell>{ot.terminal?.terminal ?? "—"}</TableCell>
                   <TableCell>{ot.bus?.idBus ?? "—"}</TableCell>
                   <TableCell>{ot.ppu ?? "—"}</TableCell>
-                  <TableCell>{ot.conductor ?? "—"}</TableCell>
+                  <TableCell>{ot.conductor?.nombreCompleto ?? "—"}</TableCell>
                   <TableCell>
                     {ot.fechaHoraIngreso
                       ? new Date(ot.fechaHoraIngreso).toLocaleString("es-CL")
@@ -270,8 +271,30 @@ export default function OrdenesTrabajo() {
                   <Input id="km" type="number" {...register("km", { valueAsNumber: true })} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="conductor">Conductor</Label>
-                  <Input id="conductor" {...register("conductor")} maxLength={30} />
+                  <Label>Conductor</Label>
+                  <Controller
+                    control={control}
+                    name="idConductor"
+                    render={({ field }) => (
+                      <Select
+                        value={field.value ? String(field.value) : ""}
+                        onValueChange={(val) => field.onChange(Number(val))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccionar conductor" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {empleados
+                            .filter((e) => e.cargo === "CONDUCTOR" && e.activo)
+                            .map((e) => (
+                              <SelectItem key={e.id} value={String(e.id)}>
+                                {e.nombreCompleto}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
               </div>
             </fieldset>
@@ -344,8 +367,30 @@ export default function OrdenesTrabajo() {
               </legend>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="jefeTurnoPatio">Jefe Turno Patio</Label>
-                  <Input id="jefeTurnoPatio" {...register("jefeTurnoPatio")} maxLength={50} />
+                  <Label>Jefe Turno Patio</Label>
+                  <Controller
+                    control={control}
+                    name="idJefeTurnoPatio"
+                    render={({ field }) => (
+                      <Select
+                        value={field.value ? String(field.value) : ""}
+                        onValueChange={(val) => field.onChange(Number(val))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccionar jefe turno patio" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {empleados
+                            .filter((e) => e.activo)
+                            .map((e) => (
+                              <SelectItem key={e.id} value={String(e.id)}>
+                                {e.nombreCompleto}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="horaJefeTurnoPatio">Hora Jefe Turno Patio</Label>
@@ -356,8 +401,30 @@ export default function OrdenesTrabajo() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="jefeTurnoMant">Jefe Turno Mantención</Label>
-                  <Input id="jefeTurnoMant" {...register("jefeTurnoMant")} maxLength={50} />
+                  <Label>Jefe Turno Mantención</Label>
+                  <Controller
+                    control={control}
+                    name="idJefeTurnoMant"
+                    render={({ field }) => (
+                      <Select
+                        value={field.value ? String(field.value) : ""}
+                        onValueChange={(val) => field.onChange(Number(val))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccionar jefe turno mantención" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {empleados
+                            .filter((e) => e.activo)
+                            .map((e) => (
+                              <SelectItem key={e.id} value={String(e.id)}>
+                                {e.nombreCompleto}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="horaJefeTurnoMant">Hora Jefe Turno Mantención</Label>
@@ -368,8 +435,30 @@ export default function OrdenesTrabajo() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="supervCalidad">Supervisor Calidad</Label>
-                  <Input id="supervCalidad" {...register("supervCalidad")} maxLength={50} />
+                  <Label>Supervisor Calidad</Label>
+                  <Controller
+                    control={control}
+                    name="idSupervCalidad"
+                    render={({ field }) => (
+                      <Select
+                        value={field.value ? String(field.value) : ""}
+                        onValueChange={(val) => field.onChange(Number(val))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccionar supervisor calidad" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {empleados
+                            .filter((e) => e.activo)
+                            .map((e) => (
+                              <SelectItem key={e.id} value={String(e.id)}>
+                                {e.nombreCompleto}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="horaSupervCalidad">Hora Supervisor Calidad</Label>
