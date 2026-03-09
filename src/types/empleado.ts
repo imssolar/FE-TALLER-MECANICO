@@ -1,4 +1,4 @@
-export type CargoEmpleado = "CONDUCTOR" | "MECANICO" | "ADMINISTRATIVO" | "JEFE_TERMINAL";
+export type CargoEmpleado = "CONDUCTOR" | "MECANICO" | "ADMINISTRATIVO" | "JEFE_TERMINAL" | "JEFE_TURNO_PATIO" | "JEFE_TURNO_MANT" | "SUPERVISOR_CALIDAD";
 export type Talla = "XS" | "S" | "M" | "L" | "XL" | "XXL";
 export type EstadoCivil = "SOLTERO" | "CASADO" | "DIVORCIADO" | "VIUDO";
 export type Escolaridad = "BASICA" | "MEDIA" | "TECNICA" | "UNIVERSITARIA" | "POSTGRADO";
@@ -98,6 +98,9 @@ export const CARGO_LABELS: Record<CargoEmpleado, string> = {
   MECANICO: "Mecánico",
   ADMINISTRATIVO: "Administrativo",
   JEFE_TERMINAL: "Jefe de Terminal",
+  JEFE_TURNO_PATIO: "Jefe de Turno Patio",
+  JEFE_TURNO_MANT: "Jefe de Turno Mantención",
+  SUPERVISOR_CALIDAD: "Supervisor de Calidad",
 };
 
 export const TALLA_OPTIONS: Talla[] = ["XS", "S", "M", "L", "XL", "XXL"];

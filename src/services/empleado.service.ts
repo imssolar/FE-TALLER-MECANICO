@@ -1,6 +1,6 @@
 import api from "./api";
 import { API_ENDPOINTS } from "@/config/endpoints";
-import type { Empleado, CreateEmpleadoDto, UpdateEmpleadoDto } from "@/types/empleado";
+import type { Empleado, CargoEmpleado, CreateEmpleadoDto, UpdateEmpleadoDto } from "@/types/empleado";
 
 export const empleadoService = {
   getAll: async (): Promise<Empleado[]> => {
@@ -25,5 +25,10 @@ export const empleadoService = {
 
   delete: async (id: number): Promise<void> => {
     await api.delete(API_ENDPOINTS.empleados.byId(id));
+  },
+
+  getByCargo: async (cargo: CargoEmpleado): Promise<Empleado[]> => {
+    const response = await api.get<Empleado[]>(API_ENDPOINTS.empleados.byCargo(cargo));
+    return response.data;
   },
 };

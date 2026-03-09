@@ -15,6 +15,7 @@ export const API_ENDPOINTS = {
   empleados: {
     base: `${BASE_URL}/empleados`,
     byId: (id: number) => `${BASE_URL}/empleados/${id}`,
+    byCargo: (cargo: string) => `${BASE_URL}/empleados/cargo/${cargo}`,
   },
   ordenesTrabajo: {
     base: `${BASE_URL}/ordenes-trabajo`,
