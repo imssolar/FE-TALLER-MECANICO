@@ -31,6 +31,7 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useEmpleados } from "@/hooks/empleado/useEmpleados";
 import {
   CARGO_LABELS,
+  LICENCIA_CONDUCIR_LABELS,
   TALLA_OPTIONS,
   ESTADO_CIVIL_LABELS,
   ESCOLARIDAD_LABELS,
@@ -38,6 +39,7 @@ import {
 } from "@/types/empleado";
 import type {
   CargoEmpleado,
+  LicenciaConducir,
   Talla,
   EstadoCivil,
   Escolaridad,
@@ -289,8 +291,25 @@ export default function Empleados() {
                   {errors.fechaIngreso && <p className="text-sm text-destructive">{errors.fechaIngreso.message}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="licenciaConducir">Licencia de Conducir</Label>
-                  <Input id="licenciaConducir" {...register("licenciaConducir")} maxLength={10} />
+                  <Label>Licencia de Conducir</Label>
+                  <Controller
+                    control={control}
+                    name="licenciaConducir"
+                    render={({ field }) => (
+                      <Select value={field.value} onValueChange={field.onChange}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccionar licencia" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {(Object.keys(LICENCIA_CONDUCIR_LABELS) as LicenciaConducir[]).map((key) => (
+                            <SelectItem key={key} value={key}>
+                              {LICENCIA_CONDUCIR_LABELS[key]}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="fechaVencimientoLicencia">Venc. Licencia</Label>

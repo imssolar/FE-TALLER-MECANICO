@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { empleadoService } from "@/services/empleado.service";
-import type { Empleado, CargoEmpleado, Talla, EstadoCivil, Escolaridad, Parentesco } from "@/types/empleado";
+import type { Empleado, CargoEmpleado, LicenciaConducir, Talla, EstadoCivil, Escolaridad, Parentesco } from "@/types/empleado";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/utils/get-error-message";
 
@@ -15,7 +15,7 @@ export interface EmpleadoFormValues {
   telefono: string;
   fechaIngreso: string;
   activo: boolean;
-  licenciaConducir: string;
+  licenciaConducir: LicenciaConducir | "";
   fechaVencimientoLicencia: string;
   talla: Talla | "";
   calzado: number | undefined;

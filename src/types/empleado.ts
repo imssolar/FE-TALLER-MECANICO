@@ -3,6 +3,7 @@ export type Talla = "XS" | "S" | "M" | "L" | "XL" | "XXL";
 export type EstadoCivil = "SOLTERO" | "CASADO" | "DIVORCIADO" | "VIUDO";
 export type Escolaridad = "BASICA" | "MEDIA" | "TECNICA" | "UNIVERSITARIA" | "POSTGRADO";
 export type Parentesco = "PADRE" | "MADRE" | "HERMANO" | "HERMANA" | "CONYUGE" | "HIJO" | "HIJA" | "OTRO";
+export type LicenciaConducir = "A1" | "A2" | "A3" | "A4" | "A5" | "D" | "E" | "F";
 
 export interface Empleado {
   id: number;
@@ -47,7 +48,7 @@ export interface CreateEmpleadoDto {
   telefono?: string;
   fechaIngreso: string;
   activo?: boolean;
-  licenciaConducir?: string;
+  licenciaConducir?: LicenciaConducir;
   fechaVencimientoLicencia?: string;
   talla?: Talla;
   calzado?: number;
@@ -74,7 +75,7 @@ export interface UpdateEmpleadoDto {
   telefono?: string;
   fechaIngreso?: string;
   activo?: boolean;
-  licenciaConducir?: string;
+  licenciaConducir?: LicenciaConducir;
   fechaVencimientoLicencia?: string;
   talla?: Talla;
   calzado?: number;
@@ -125,4 +126,15 @@ export const PARENTESCO_LABELS: Record<Parentesco, string> = {
   HIJO: "Hijo",
   HIJA: "Hija",
   OTRO: "Otro",
+};
+
+export const LICENCIA_CONDUCIR_LABELS: Record<LicenciaConducir, string> = {
+  A1: "A1 - Taxis (ya no se otorga)",
+  A2: "A2 - Taxis, ambulancias, transporte 10-17 pasajeros",
+  A3: "A3 - Transporte público/privado sin límite de capacidad",
+  A4: "A4 - Transporte de carga > 3.500 kg",
+  A5: "A5 - Carga articulada > 3.500 kg",
+  D: "D - Maquinaria automotriz",
+  E: "E - Vehículos de tracción animal",
+  F: "F - Vehículos de emergencia",
 };
