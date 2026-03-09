@@ -85,7 +85,10 @@ interface UseOrdenesTrabajoReturn {
   confirmDelete: () => void;
   terminales: Terminal[];
   buses: Bus[];
-  empleados: Empleado[];
+  conductores: Empleado[];
+  jefesTurnoPatio: Empleado[];
+  jefesTurnoMant: Empleado[];
+  supervisoresCalidad: Empleado[];
 }
 
 export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
@@ -113,11 +116,29 @@ export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
   });
   const buses = Array.isArray(busesData) ? busesData : [];
 
-  const { data: empleadosData } = useQuery({
-    queryKey: ["empleados"],
-    queryFn: empleadoService.getAll,
+  const { data: conductoresData } = useQuery({
+    queryKey: ["empleados", "CONDUCTOR"],
+    queryFn: () => empleadoService.getByCargo("CONDUCTOR"),
   });
-  const empleados = Array.isArray(empleadosData) ? empleadosData : [];
+  const conductores = Array.isArray(conductoresData) ? conductoresData : [];
+
+  const { data: jefesTurnoPatioData } = useQuery({
+    queryKey: ["empleados", "JEFE_TURNO_PATIO"],
+    queryFn: () => empleadoService.getByCargo("JEFE_TURNO_PATIO"),
+  });
+  const jefesTurnoPatio = Array.isArray(jefesTurnoPatioData) ? jefesTurnoPatioData : [];
+
+  const { data: jefesTurnoMantData } = useQuery({
+    queryKey: ["empleados", "JEFE_TURNO_MANT"],
+    queryFn: () => empleadoService.getByCargo("JEFE_TURNO_MANT"),
+  });
+  const jefesTurnoMant = Array.isArray(jefesTurnoMantData) ? jefesTurnoMantData : [];
+
+  const { data: supervisoresCalidadData } = useQuery({
+    queryKey: ["empleados", "SUPERVISOR_CALIDAD"],
+    queryFn: () => empleadoService.getByCargo("SUPERVISOR_CALIDAD"),
+  });
+  const supervisoresCalidad = Array.isArray(supervisoresCalidadData) ? supervisoresCalidadData : [];
 
   const form = useForm<OrdenTrabajoFormValues>();
 
@@ -239,7 +260,10 @@ export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
     confirmDelete,
     terminales,
     buses,
-    empleados,
+    conductores,
+    jefesTurnoPatio,
+    jefesTurnoMant,
+    supervisoresCalidad,
   };
 }
 
