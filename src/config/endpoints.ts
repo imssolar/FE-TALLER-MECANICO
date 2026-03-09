@@ -19,6 +19,8 @@ export const API_ENDPOINTS = {
   ordenesTrabajo: {
     base: `${BASE_URL}/ordenes-trabajo`,
     byId: (id: number) => `${BASE_URL}/ordenes-trabajo/${id}`,
+    byBus: (idBus: number) => `${BASE_URL}/ordenes-trabajo/bus/${idBus}`,
+    byTerminal: (idTerminal: number) => `${BASE_URL}/ordenes-trabajo/terminal/${idTerminal}`,
   },
   terminales: {
     base: `${BASE_URL}/terminal`,
