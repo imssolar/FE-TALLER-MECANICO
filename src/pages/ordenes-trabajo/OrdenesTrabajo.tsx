@@ -51,7 +51,10 @@ export default function OrdenesTrabajo() {
     confirmDelete,
     terminales,
     buses,
-    empleados,
+    conductores,
+    jefesTurnoPatio,
+    jefesTurnoMant,
+    supervisoresCalidad,
   } = useOrdenesTrabajo();
 
   const { register, handleSubmit, control, formState: { errors } } = form;
@@ -284,9 +287,7 @@ export default function OrdenesTrabajo() {
                           <SelectValue placeholder="Seleccionar conductor" />
                         </SelectTrigger>
                         <SelectContent>
-                          {empleados
-                            .filter((e) => e.cargo === "CONDUCTOR" && e.activo)
-                            .map((e) => (
+                          {conductores.map((e) => (
                               <SelectItem key={e.id} value={String(e.id)}>
                                 {e.nombreCompleto}
                               </SelectItem>
@@ -380,9 +381,7 @@ export default function OrdenesTrabajo() {
                           <SelectValue placeholder="Seleccionar jefe turno patio" />
                         </SelectTrigger>
                         <SelectContent>
-                          {empleados
-                            .filter((e) => e.activo)
-                            .map((e) => (
+                          {jefesTurnoPatio.map((e) => (
                               <SelectItem key={e.id} value={String(e.id)}>
                                 {e.nombreCompleto}
                               </SelectItem>
@@ -414,9 +413,7 @@ export default function OrdenesTrabajo() {
                           <SelectValue placeholder="Seleccionar jefe turno mantención" />
                         </SelectTrigger>
                         <SelectContent>
-                          {empleados
-                            .filter((e) => e.activo)
-                            .map((e) => (
+                          {jefesTurnoMant.map((e) => (
                               <SelectItem key={e.id} value={String(e.id)}>
                                 {e.nombreCompleto}
                               </SelectItem>
@@ -448,9 +445,7 @@ export default function OrdenesTrabajo() {
                           <SelectValue placeholder="Seleccionar supervisor calidad" />
                         </SelectTrigger>
                         <SelectContent>
-                          {empleados
-                            .filter((e) => e.activo)
-                            .map((e) => (
+                          {supervisoresCalidad.map((e) => (
                               <SelectItem key={e.id} value={String(e.id)}>
                                 {e.nombreCompleto}
                               </SelectItem>
