@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router";
+import { href, Link, useLocation } from "react-router";
 import {
   Sidebar as SidebarPrimitive,
   SidebarContent,
@@ -28,6 +28,7 @@ import {
   ChevronRight,
   BookOpen,
   Wrench,
+  RadioTower,
 } from "lucide-react";
 
 const mainNav = [
@@ -37,6 +38,7 @@ const mainNav = [
   { title: "Neumáticos", href: "/neumaticos", icon: CircleDot },
   { title: "Baterías", href: "/baterias", icon: Battery },
   { title: "Órdenes de Trabajo", href: "/ordenes-trabajo", icon: ClipboardList },
+  { title: "Torre de Control", href: "/torre-control", icon: RadioTower }
 ];
 
 const catalogos = [
