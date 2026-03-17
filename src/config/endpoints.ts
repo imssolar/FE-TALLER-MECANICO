@@ -35,4 +35,11 @@ export const API_ENDPOINTS = {
     base: `${BASE_URL}/rutas`,
     byId: (id: number) => `${BASE_URL}/rutas/${id}`,
   },
+  torreControl: {
+    base: `${BASE_URL}/torre-control`,
+    byId: (id: number) => `${BASE_URL}/torre-control/${id}`,
+    byBus: (idBus: number) => `${BASE_URL}/torre-control/bus/${idBus}`,
+    abiertos: `${BASE_URL}/torre-control/abiertos`,
+    cerrados: `${BASE_URL}/torre-control/cerrados`,
+  },
 } as const;
