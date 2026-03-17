@@ -26,3 +26,6 @@ dist-ssr
 
 # GGA (pre-commit code review tool)
 .gga
+
+# Documentos internos
+PENDIENTES.md
