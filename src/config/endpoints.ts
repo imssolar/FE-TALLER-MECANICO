@@ -42,4 +42,9 @@ export const API_ENDPOINTS = {
     abiertos: `${BASE_URL}/torre-control/abiertos`,
     cerrados: `${BASE_URL}/torre-control/cerrados`,
   },
+  cofpatio: {
+    base: `${BASE_URL}/cofpatio`,
+    byId: (id: number) => `${BASE_URL}/cofpatio/${id}`,
+    byBus: (idBus: number) => `${BASE_URL}/cofpatio/bus/${idBus}`,
+  },
 } as const;
