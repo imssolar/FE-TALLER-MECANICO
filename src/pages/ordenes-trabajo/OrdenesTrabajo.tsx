@@ -116,10 +116,10 @@ export default function OrdenesTrabajo() {
                   <TableCell>
                     {ot.tipoOt ? TIPO_OT_LABELS[ot.tipoOt as TipoOt] ?? ot.tipoOt : "—"}
                   </TableCell>
-                  <TableCell>{ot.terminal?.terminal ?? "—"}</TableCell>
-                  <TableCell>{ot.bus?.idBus ?? "—"}</TableCell>
+                  <TableCell>{ot.nombreTerminal}</TableCell>
+                  <TableCell>{ot.patenteB ?? "—"}</TableCell>
                   <TableCell>{ot.ppu ?? "—"}</TableCell>
-                  <TableCell>{ot.conductor?.nombreCompleto ?? "—"}</TableCell>
+                  <TableCell>{ot.nombreCompletoConductor ?? "—"}</TableCell>
                   <TableCell>
                     {ot.fechaHoraIngreso
                       ? new Date(ot.fechaHoraIngreso).toLocaleString("es-CL")

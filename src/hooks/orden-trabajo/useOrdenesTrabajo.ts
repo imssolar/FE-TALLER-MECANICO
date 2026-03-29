@@ -9,8 +9,10 @@ import type { OrdenTrabajo, TipoOt, CreateOrdenTrabajoDto } from "@/types/orden-
 import type { Terminal } from "@/types/terminal";
 import type { Bus } from "@/types/bus";
 import type { Empleado } from "@/types/empleado";
+
 import { toast } from "sonner";
 import { getErrorMessage } from "@/utils/get-error-message";
+
 
 export interface OrdenTrabajoFormValues {
   id: number | undefined;
@@ -188,23 +190,23 @@ export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
     setEditingOt(ot);
     form.reset({
       id: ot.id,
-      idTerminal: ot.terminal?.idTerminal ?? undefined,
+      idTerminal: ot.idTerminal ?? undefined,
       tipoOt: ot.tipoOt ?? "",
       nroOtManager: ot.nroOtManager ?? undefined,
-      idBus: ot.bus?.idBus ?? undefined,
+      idBus: ot.idBus ?? undefined,
       km: ot.km ?? undefined,
       ppu: ot.ppu ?? "",
-      idConductor: ot.conductor?.id ?? undefined,
+      idConductor: ot.idConductor ?? undefined,
       fechaHoraIngreso: ot.fechaHoraIngreso ?? "",
       fechaHoraSalida: ot.fechaHoraSalida ?? "",
       trabajoARealizar: ot.trabajoARealizar ?? "",
       obsTrabMecanico: ot.obsTrabMecanico ?? "",
       obsTrabElectrico: ot.obsTrabElectrico ?? "",
-      idJefeTurnoPatio: ot.jefeTurnoPatio?.id ?? undefined,
+      idJefeTurnoPatio: ot.idJefeTurnoPatio ?? undefined,
       horaJefeTurnoPatio: ot.horaJefeTurnoPatio ?? "",
-      idJefeTurnoMant: ot.jefeTurnoMant?.id ?? undefined,
+      idJefeTurnoMant: ot.idJefeTurnoMant ?? undefined,
       horaJefeTurnoMant: ot.horaJefeTurnoMant ?? "",
-      idSupervCalidad: ot.supervCalidad?.id ?? undefined,
+      idSupervCalidad: ot.idSupervCalidad ?? undefined,
       horaSupervCalidad: ot.horaSupervCalidad ?? "",
       obsControlCalidad: ot.obsControlCalidad ?? "",
       repAutoriza: ot.repAutoriza ?? "",
@@ -235,8 +237,8 @@ export function useOrdenesTrabajo(): UseOrdenesTrabajoReturn {
       String(ot.id).includes(search) ||
       ot.tipoOt?.toLowerCase().includes(search.toLowerCase()) ||
       ot.ppu?.toLowerCase().includes(search.toLowerCase()) ||
-      ot.conductor?.nombreCompleto?.toLowerCase().includes(search.toLowerCase()) ||
-      ot.terminal?.terminal?.toLowerCase().includes(search.toLowerCase())
+      ot.patenteB?.toLowerCase().includes(search.toLowerCase()) ||
+      ot.nombreCompletoConductor?.toLowerCase().includes(search.toLowerCase())
   );
 
   const isSaving = createMutation.isPending || updateMutation.isPending;
