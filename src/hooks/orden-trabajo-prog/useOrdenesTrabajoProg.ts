@@ -98,7 +98,7 @@ export function useOrdenesTrabajoProg(): UseOrdenesTrabajoProgReturn {
 
   const { data, isLoading } = useQuery({
     queryKey: ["ordenes-trabajo-prog"],
-    queryFn: ordenTrabajoProgService.findAll,
+    queryFn: ordenTrabajoProgService.getAll,
   });
   const ordenes = Array.isArray(data) ? data : [];
 
@@ -215,9 +215,9 @@ export function useOrdenesTrabajoProg(): UseOrdenesTrabajoProgReturn {
 
   const onSubmit = (data: OrdenTrabajoProgFormValues) => {
     if (editingOt) {
-      updateMutation.mutate({ id: editingOt.id, data: toDto(data) });
+      updateMutation.mutate({ id: editingOt.id, data: cleanFormData(data) });
     } else {
-      createMutation.mutate(toDto(data));
+      createMutation.mutate(cleanFormData(data));
     }
   };
 
@@ -264,7 +264,7 @@ export function useOrdenesTrabajoProg(): UseOrdenesTrabajoProgReturn {
   };
 }
 
-function toDto(data: OrdenTrabajoProgFormValues): CreateOrdenTrabajoProgDto {
+function cleanFormData(data: OrdenTrabajoProgFormValues): CreateOrdenTrabajoProgDto {
   return {
     idTerminal: data.idTerminal,
     nroOtManager: data.nroOtManager,

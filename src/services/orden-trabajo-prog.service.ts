@@ -1,22 +1,22 @@
-import { api } from "@/services/api";
+import api from "@/services/api";
 import { API_ENDPOINTS } from "@/config/endpoints";
-import {
+import type {
   OrdenTrabajoProg,
   CreateOrdenTrabajoProgDto,
   UpdateOrdenTrabajoProgDto,
 } from "@/types/orden-trabajo-prog";
 
 export const ordenTrabajoProgService = {
-  findAll: async (): Promise<OrdenTrabajoProg[]> =>
+  getAll: async (): Promise<OrdenTrabajoProg[]> =>
     (await api.get(API_ENDPOINTS.ordenesTrabajoProg.base)).data,
 
-  findById: async (id: number): Promise<OrdenTrabajoProg> =>
+  getById: async (id: number): Promise<OrdenTrabajoProg> =>
     (await api.get(API_ENDPOINTS.ordenesTrabajoProg.byId(id))).data,
 
-  findByBus: async (idBus: number): Promise<OrdenTrabajoProg[]> =>
+  getByBus: async (idBus: number): Promise<OrdenTrabajoProg[]> =>
     (await api.get(API_ENDPOINTS.ordenesTrabajoProg.byBus(idBus))).data,
 
-  findByTerminal: async (idTerminal: number): Promise<OrdenTrabajoProg[]> =>
+  getByTerminal: async (idTerminal: number): Promise<OrdenTrabajoProg[]> =>
     (await api.get(API_ENDPOINTS.ordenesTrabajoProg.byTerminal(idTerminal))).data,
 
   create: async (dto: CreateOrdenTrabajoProgDto): Promise<OrdenTrabajoProg> =>

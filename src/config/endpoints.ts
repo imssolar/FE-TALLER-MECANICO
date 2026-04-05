@@ -53,4 +53,13 @@ export const API_ENDPOINTS = {
     byBus: (idBus: number) => `${BASE_URL}/ordenes-trabajo-prog/bus/${idBus}`,
     byTerminal: (idTerminal: number) => `${BASE_URL}/ordenes-trabajo-prog/terminal/${idTerminal}`,
   },
+  ordenesTrabajoMovil: {
+    base: `${BASE_URL}/ordenes-trabajo-movil`,
+    byId: (id: number) => `${BASE_URL}/ordenes-trabajo-movil/${id}`,
+    byTerminal: (idTerminal: number) => `${BASE_URL}/ordenes-trabajo-movil/terminal/${idTerminal}`,
+  },
+  moviles: {
+    base: `${BASE_URL}/moviles`,
+    byId: (id: number) => `${BASE_URL}/moviles/${id}`,
+  },
 } as const;
