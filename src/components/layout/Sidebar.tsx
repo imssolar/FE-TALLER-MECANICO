@@ -38,9 +38,16 @@ const mainNav = [
   { title: "Empleados", href: "/empleados", icon: Users },
   { title: "Neumáticos", href: "/neumaticos", icon: CircleDot },
   { title: "Baterías", href: "/baterias", icon: Battery },
-  { title: "Órdenes de Trabajo", href: "/ordenes-trabajo", icon: ClipboardList },
   { title: "Torre de Control", href: "/torre-control", icon: RadioTower },
   { title: "COF Patio", href: "/cofpatio", icon: Car },
+];
+
+const ordenesTrabajoNav = [
+  { title: "OT Base", href: "/ordenes-trabajo" },
+  { title: "OT Programadas", href: "/ordenes-trabajo-prog" },
+  { title: "OT Móviles", href: "/ordenes-trabajo-movil" },
+  { title: "OT Carrocería", href: "/ot-carroceria" },
+  { title: "OT Taller Externo", href: "/ot-taller-ext" },
 ];
 
 const catalogos = [
@@ -82,6 +89,35 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+
+              <Collapsible
+                defaultOpen={location.pathname.startsWith("/ordenes-trabajo") || location.pathname.startsWith("/ot-")}
+                className="group/collapsible-ot"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton>
+                      <ClipboardList className="h-4 w-4" />
+                      <span>Órdenes de Trabajo</span>
+                      <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible-ot:rotate-90" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {ordenesTrabajoNav.map((item) => (
+                        <SidebarMenuSubItem key={item.href}>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={location.pathname === item.href}
+                          >
+                            <Link to={item.href}>{item.title}</Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
 
               <Collapsible defaultOpen className="group/collapsible">
                 <SidebarMenuItem>

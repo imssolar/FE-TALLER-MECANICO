@@ -1,3 +1,4 @@
+import { type ReactElement } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { PrivateRoute } from "@/components/auth/PrivateRoute";
 import { DefaultLayout } from "@/components/layout/DefaultLayout";
@@ -12,8 +13,10 @@ import Terminales from "@/pages/terminales/Terminales";
 import Rutas from "@/pages/rutas/Rutas";
 import TorreControl from "@/pages/torre-control/TorreControl";
 import Cofpatio from "@/pages/cofpatio/Cofpatio";
+import OrdenesTrabajoProg from "@/pages/orden-trabajo-prog/OrdenesTrabajoProg";
+import OrdenesTrabajoMovil from "@/pages/ordenes-trabajo-movil/OrdenesTrabajoMovil";
 
-export default function App() {
+export default function App(): ReactElement {
   return (
     <BrowserRouter>
       <Providers>
@@ -33,6 +36,8 @@ export default function App() {
             <Route path="/torre-control" element={<TorreControl />} />
             <Route path="/cofpatio" element={<Cofpatio />} />
             <Route path="/ordenes-trabajo" element={<OrdenesTrabajo />} />
+            <Route path="/ordenes-trabajo-prog" element={<OrdenesTrabajoProg />} />
+            <Route path="/ordenes-trabajo-movil" element={<OrdenesTrabajoMovil />} />
             <Route path="/catalogos/modelos" element={<Modelos />} />
             <Route path="/catalogos/terminales" element={<Terminales />} />
             <Route path="/catalogos/rutas" element={<Rutas />} />
